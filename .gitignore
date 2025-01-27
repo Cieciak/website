@@ -1,0 +1,8 @@
+# Ignore python stuff
+
+__pycache__/
+.venv/
+
+# Ignore my old stuff
+
+.old/
