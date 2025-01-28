@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" height="100vh">
     <head>
+        <link rel="stylesheet" href="/static/css/vars.css"></link>
+        <link rel="stylesheet" href="/static/css/center.css"></link>
         <style>
             * {
                 box-sizing: border-box;
-                color: lime;
+                color: var(--def-fg);
+                font-family: var(--def-fn);
             }
             html, body{
                 margin: 0px;
@@ -13,24 +16,24 @@
             }
             #full-panel {
                 height: 100%;
-                background: darkblue;
+                background: var(--def-bg);
             }
             #main-text {
-                font-size: 33vh;
+                font-size: 20vh;
+                font-weight: 500;
+            }
+            a {
+                text-decoration: none;
             }
         </style>
         <meta charset="UTF-8">
         <title>Cięciak</title>
-        <link rel="stylesheet" href="/static/css/center.css"></link>
     </head>
     <body>
         <div class="center-container" id="full-panel">
             <div id="main-text">
-                niko
+                <a href="/home">niko</a>
             </div>
-        </div>
-        <div style="position: absolute; top: 95%; height: 5%; width: 100%; border: 3px solid red;">
-            hello
         </div>
     </body>
 </html>
