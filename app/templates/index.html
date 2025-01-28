@@ -4,36 +4,33 @@
         <style>
             * {
                 box-sizing: border-box;
+                color: lime;
             }
             html, body{
                 margin: 0px;
                 padding: 0px;
                 height: 100%;
             }
-            div {
-                height: 20%;                
+            #full-panel {
+                height: 100%;
+                background: darkblue;
             }
-            .container {
-                position: relative;
-                border: 3px solid green;
-                height: 300px;
-            }
-            .centered {
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
+            #main-text {
+                font-size: 33vh;
             }
         </style>
         <meta charset="UTF-8">
         <title>Cięciak</title>
-        <link rel="stylesheet" href="/static/css/center.css">
+        <link rel="stylesheet" href="/static/css/center.css"></link>
     </head>
     <body>
-        <div class="container">
-            <div class="centered">
-                Hello
+        <div class="center-container" id="full-panel">
+            <div id="main-text">
+                niko
             </div>
+        </div>
+        <div style="position: absolute; top: 95%; height: 5%; width: 100%; border: 3px solid red;">
+            hello
         </div>
     </body>
 </html>
