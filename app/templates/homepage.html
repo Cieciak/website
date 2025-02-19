@@ -4,13 +4,61 @@
     <link rel="stylesheet" href="/static/css/vars.css"></link>
     <link rel="stylesheet" href="/static/css/center.css"></link>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+        html {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
         body {
+            margin: 0;
+            padding: 1%;
+            display: flex;
+            flex-direction: column;
             background-color: var(--def-bg);
             color: var(--def-fg);
+            height: 100%;
+            width: 100%;
         }
-        header {
+        #header {
+            padding: 1%;
+            border-radius: 1em;
+        }
+        #footer {
+            padding: 0.5%;
+            border-radius: 0.5em;
+            font-size: 0.5em;
+        }
+        #header, #footer {
+            display: flex;
             background-color: rgba(128, 255, 255, 0.1);
             width: 100%;
+            justify-content: space-between;
+        }
+        #content {
+            margin-top: 1em;
+            margin-bottom: 1em;
+            padding: 1%;
+            border-radius: 1em;
+            display: flex;
+            flex-direction: row;
+            background-color: rgba(128, 255, 255, 0.033);
+            flex-grow: 1;
+        }
+        #content * {
+            margin-left: 1em;
+            margin-right: 1em;
+            padding: 1%;
+            border-radius: 1em;
+            background-color: rgba(128, 255, 255, 0.05);
+            flex-grow: 1;
+        }
+        p {
+            margin: 0;
+            padding: 0;
         }
     </style>
     <meta charset="UTF-8">
@@ -18,8 +66,20 @@
     <title>Homepage</title>
 </head>
 <body>
-    <header class="center-bar">
-        <h1>Cieciak</h1>
-    </header>
+    <div id="header">
+        <div></div>
+        <div>
+            <p style="font-size: 2em;">Home</p>
+        </div>
+        <div id="log-field">
+            
+        </div>
+    </div>
+    <div id="content">
+        <div>left</div>
+        <div>center</div>
+        <div>right</div>
+    </div>
+    <div id="footer">cieciak 2025</div>
 </body>
 </html>
