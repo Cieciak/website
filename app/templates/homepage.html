@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="/static/css/vars.css"></link>
-    <link rel="stylesheet" href="/static/css/debug.css"></link>
+    <link rel="stylesheet" href="/static/css/center.css"></link>
     <style>
         * {
             box-sizing: border-box;
+
+            font-family: var(--def-fn);
 
             margin: 0px;
             padding: 0px;
@@ -39,20 +41,27 @@
             height: 5%;
         }
         .proj-card {
+            background-color: #ffffff10;
 
+            margin-bottom: 2vh;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+        .proj-card * {
+            word-wrap: break-word;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <div>headesssssssssssssssssssssssssssssssssssssssssr</div>
-        <div>ffffffffff</div>
+        <div></div>
+        <div class="center-container"><h1>Homepage</h1></div>
         <div>logged <div>hello</div></div>
     </div>
     <div class="content">
-        <div>
-            <div style="height: 10%;">Left</div>
-            <div style="height: 90%; overflow: auto;">
+        <div style="background-color: #ffffff10; border-radius: 3vh;">
+            <div class="center-container" style="height: 5%;"><h2>Projects</h2></div>
+            <div style="height: 90%; overflow: auto; background-color: #ffffff10;">
                 {% for title, desc in projects %}
                 <div class="proj-card">
                     <div>{{title}}</div>
@@ -60,12 +69,21 @@
                 </div>
                 {% endfor %}
             </div>
+            <div class="center-container" style="height: 5%;"><h3>More...</h3></div>
         </div>
-        <div>center</div>
-        <div>right</div>
+        <div></div>
+        <div>
+            <div style="height: 20%;">GitHub</div>
+            <div style="height: 20%;">Hex</div>
+            <div style="height: 20%;"></div>
+            <div style="height: 20%;"></div>
+            <div style="height: 20%;"></div>
+        </div>
     </div>
     <div class="footer">
-        footer
+        <div style="background-color: #ffffff10;">
+            <h6>Cięciak 2025</h6>
+        </div>
     </div>
 </body>
 </html>
