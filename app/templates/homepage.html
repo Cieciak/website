@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Cięciak - Homepage</title>
+    <link rel="icon" href="/static/images/favicon.svg" sizes="any" type="image/svg+xml">
     <link rel="stylesheet" href="/static/css/vars.css"></link>
     <link rel="stylesheet" href="/static/css/center.css"></link>
     <style>
@@ -20,6 +22,10 @@
             color: var(--def-fg);
             overflow: hidden;
         }
+        a {
+            color: var(--def-fg);
+            text-decoration: none;
+        }
         .header {
             height: 10%;
             width: 100%;
@@ -28,6 +34,7 @@
         }
         .header > div {
             width: 33.333%;
+            height: auto;
         }
         .content {
             height: 85%;
@@ -38,30 +45,54 @@
         .content > div{
             width: 33.333%;
         }
+        .content-right {
+            display: flex;
+            flex-direction: column;
+            gap: 5%;
+        }
         .content-right > div{
-            margin-bottom: 8.60%;
             height: 16%;
             background-color: #ffffff10;
             border-radius: 3vh;
-        }
-        .content-right > div:last-child {
-            margin-bottom: 0%;
-        }
-        .content-right > div:first-child {
-            margin-top: 0%;
         }
         .footer {
             height: 5vh;
         }
         .proj-card {
+            height: fit-content;
             background-color: #ffffff10;
+
+            border-radius: 0.333em;
 
             margin-bottom: 2vh;
             margin-left: 5%;
             margin-right: 5%;
+
+            padding: 0.33em;
+        }
+        .proj-card > div {
+            padding: 0.166em;
+            border-radius: 0.33em;
+
+            background-color: #ffffff10;
         }
         .proj-card * {
             word-wrap: break-word;
+        }
+        .account-card {
+            background-color: #ffffff10;
+            overflow: hidden;
+
+            width: fit-content;
+            max-width: 50%;
+            margin-left: auto;
+            margin-right: 0;
+            border-radius: .5em;
+        }
+        .account-card > h5 {
+            text-align: center;
+            overflow: hidden;
+            margin: 0.2em;
         }
     </style>
 </head>
@@ -69,15 +100,20 @@
     <div class="header">
         <div></div>
         <div class="center-container"><h1>Homepage</h1></div>
-        <div>logged <div>hello</div></div>
+        <div style="padding: 2vh;">
+            <div class="account-card">
+                <h5>Logged</h5>
+                <h5>Lorem ipsum</h5>
+            </div>
+        </div>
     </div>
     <div class="content">
         <div style="background-color: #ffffff10; border-radius: 3vh;">
             <div class="center-container" style="height: 5%;"><h2>Projects</h2></div>
-            <div style="height: 90%; overflow: auto; background-color: #ffffff10;">
+            <div style="height: 90%; overflow: auto; background-color: #ffffff05; padding-top: 1em;">
                 {% for title, desc in projects %}
                 <div class="proj-card">
-                    <div>{{title}}</div>
+                    <h4>{{title}}</h4>
                     <div>{{desc}}</div>
                 </div>
                 {% endfor %}
@@ -86,11 +122,11 @@
         </div>
         <div></div>
         <div class="content-right">
-            <div class="center-container"><h3>GitHub</h3></div>
+            <div class="center-container"><h3><a href="https://github.com/Cieciak">GitHub</a></h3></div>
             <div class="center-container"><h3>Hex</h3></div>
-            <div></div>
-            <div></div>
-            <div></div>
+            <div class="center-container"></div>
+            <div class="center-container"></div>
+            <div class="center-container"><h3>Profile</h3></div>
         </div>
     </div>
     <div class="footer">
