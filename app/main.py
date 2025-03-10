@@ -5,6 +5,18 @@ import os
 
 main = Blueprint('main', __name__)
 
+def get_projects(path: str) -> list[tuple[str, str]]:
+    projects: list = []
+    for proj_dir in os.listdir(path):
+        if 'desc.txt' in os.listdir(os.path.join(path, proj_dir)):
+            with open(os.path.join(path, proj_dir, 'desc.txt')) as file:
+                title, description = file.readlines()
+
+            projects.append(
+                (title, description)
+            )
+    return projects
+
 @main.route('/')
 def index():
     return render_template('index.html')
@@ -26,3 +38,11 @@ def homepage():
             )
 
     return render_template('homepage.html', projects=projects)
+
+@main.route('/project')
+def project():
+    # Get all projects
+    PROJ_ROOT = 'app/templates/projects/'
+    projects = get_projects(PROJ_ROOT)
+
+    return render_template('project-list.html', projects=projects)

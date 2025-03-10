@@ -3,9 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Cięciak - Projects</title>
+    <link rel="icon" href="/static/images/favicon.svg" sizes="any" type="image/svg+xml">
+    <link rel="stylesheet" href="/static/css/vars.css"></link>
+    <link rel="stylesheet" href="/static/css/center.css"></link>
+    <style>
+        * {
+            box-sizing: border-box;
+
+            font-family: var(--def-fn);
+
+            margin: 0px;
+            padding: 0px;
+        }
+        body {
+            width: 100vw;
+            height: 100vh;
+
+            background-color: var(--def-bg);
+            color: var(--def-fg);
+
+            overflow: hidden;
+        }
+        a {
+            color: var(--def-fg);
+            text-decoration: none;
+        }
+        .header {
+            height: 10%;
+            width: 100%;
+
+            display: flex;
+        }
+        .header > div {
+            width: 33.333%;
+            height: auto;
+        }
+        .content {
+            height: 85%;
+            width: 100%;
+
+            display: grid;
+
+            grid-template-columns: auto auto auto auto auto;
+            overflow: auto;
+        }
+        .content > div {
+            width: 20vw;
+            height: 33.333vh;
+            padding: 0.25em;
+
+        }
+        .content > div > div {
+            width: 100%;
+            height: 100%;
+        }
+        .proj-card {
+            background-color: #ffffff10;
+            border-radius: 0.5em;
+
+            padding: 0.25em;
+        }
+        .proj-card > h4 {
+            height: 10%;
+        }
+        .proj-card > div {
+            height: 90%;
+
+            background-color: #ffffff10;
+            border-radius: .75em;
+            padding: .5em;
+        }
+        .footer {
+            height: 5%;
+        }
+
+        .account-card {
+            background-color: #ffffff10;
+            overflow: hidden;
+
+            width: fit-content;
+            max-width: 50%;
+            margin-left: auto;
+            margin-right: 0;
+            border-radius: .5em;
+        }
+        .account-card > h5 {
+            text-align: center;
+            overflow: hidden;
+            margin: .2em;
+        }
+
+        .back-card {
+            background-color: #ffffff10;
+            overflow: hidden;
+
+            width: fit-content;
+            max-width: 50%;
+            margin-left: 0;
+            margin-right: auto;
+            border-radius: .5em;
+        }
+        .back-card > h5 {
+            text-align: center;
+            overflow: hidden;
+            margin: .2em;
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="header">
+        <div style="padding: 3vh;">
+            <div class="back-card">
+                <h5><a href="/home">Back</a></h5>
+            </div>
+        </div>
+        <div class="center-container"><h1>Projects</h1></div>
+        <div style="padding: 2vh;">
+            <div class="account-card">
+                <h5>Logged</h5>
+                <h5>Lorem ipsum</h5>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        {% for title, desc in projects %}
+        <div>
+            <div class="proj-card">
+                <h4>{{title}}</h4>
+                <div>{{desc}}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="footer">
+        <div class="center-h-container" style="height: 3vh; margin-top: 1vh; margin-bottom: 1vh; background-color: #ffffff10; border-radius: 2vh;padding: 1vh;">
+            <h6>Cieciak 2025</h6>
+        </div>
+    </div>
 </body>
 </html>
