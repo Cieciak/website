@@ -46,3 +46,13 @@ def project():
     projects = get_projects(PROJ_ROOT)
 
     return render_template('project-list.html', projects=projects)
+
+@main.route('/project/<string:name>')
+def project_page(name: str):
+
+    return 'Hello there'
+
+@main.route('/time')
+def time():
+
+    return render_template('time.html')

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/static/images/favicon.svg" sizes="any" type="image/svg+xml">
+    <link rel="stylesheet" href="/static/css/vars.css"></link>
+    <link rel="stylesheet" href="/static/css/center.css"></link>
+    <title>Time</title>
+    <style>
+        * {
+            box-sizing: border-box;
+
+            font-family: var(--def-fn);
+
+            margin: 0px;
+            padding: 0px;
+        }
+        body {
+            width: 100vw;
+            height: 100vh;
+
+            background-color: var(--def-bg);
+            color: var(--def-fg);
+            overflow: hidden;
+        }
+        h1 {
+            background-color: #ffffff10;
+            border-radius: .5em;
+
+            padding: .5em;
+        }
+        #time-box {
+            background-color: #ffffff20;
+            border-radius: .333em;
+
+            font-size: xx-large;
+
+            margin-top: .5em;
+            padding: .5em;
+        }
+        #time-set{
+            background-color: #ffffff20;
+            color: var(--def-fg);
+            border: 0;
+            border-radius: .2em;
+
+            padding: .15em;
+        }
+
+    </style>
+    <script src="/static/js/time.js"></script>
+</head>
+<body onload="init();">
+    <div>
+        <h1 class="center">Czas operacyjny</h1>
+        <div class="center" id="time-box">
+            <p contenteditable class="center" id="time-display" onclick="enterEditMode();"></p>
+            <button id="time-set" onclick="exitEditMode();">Ustaw</button>
+        </div>
+    </div>
+</body>
+</html>
