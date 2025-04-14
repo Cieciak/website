@@ -56,3 +56,8 @@ def project_page(name: str):
 def time():
 
     return render_template('time.html')
+
+@main.route('/am-i-busy')
+def amibusy():
+
+    return render_template('amibusy.html')
