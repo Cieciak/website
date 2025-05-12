@@ -61,3 +61,7 @@ def time():
 def amibusy():
 
     return render_template('amibusy.html')
+
+@main.route('/news-template')
+def news_template():
+    return render_template('news-template.html')

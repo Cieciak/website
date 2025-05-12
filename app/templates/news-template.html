@@ -1,0 +1,84 @@
+<html>
+<head>
+    <link rel="stylesheet" href="/static/css/vars.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            color:  var(--def-fg);
+            font-family: var(--def-fn);
+            background-color: var(--def-bg);
+
+            margin: 0px;
+            padding: 0px;
+        }
+        html, body {
+            height: 100%;
+        }
+
+        p, b, i, u {
+            background-color: #fff0;
+        }
+
+        #article {
+            padding: 0.2em;
+        }
+        #article > div {
+            border-radius: 0.5em;
+            border: 2px solid darkblue;
+            padding: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        #article > div > :is(p, h1, h2, h3, h4, h5, h6)[contenteditable] {
+            border-radius: 0.5em;
+            border: 2px solid darkblue;
+            padding: 0.5em;
+            margin-bottom: 0.2em;
+            background-color: #fff0;
+        }
+
+        p {
+            padding: 0.333em;
+
+            background-color: #fff0;
+        }
+
+        button {
+            border: 2px solid darkcyan;
+            border-radius: 0.8em;
+            padding: 0.4em;
+        }
+
+        div {
+            background-color: #fff1;
+        }
+    </style>
+
+    <script src="/static/js/news.js"></script>
+</head>
+<body>
+    <div style="height: fit-content;">
+        <p>Tytuł:</p>
+        <h1 contenteditable>fdd</h1>
+    </div>
+    <div style="height: fit-content;">
+        <p>Lead:</p>
+        <h2 contenteditable>fdd</h2>
+    </div>
+    <div style="height: fit-content;">
+        <p>Treść:</p>
+        <div>
+            <button onclick="document.execCommand('bold', false, null);">Pogrubienie</button>
+            <button onclick="document.execCommand('italic', false, null);">Pochylenie</button>
+            <button onclick="document.execCommand('underline', false, null);">Podkreślenie</button>
+        </div>
+        <div id="article">
+        </div>
+        </div>
+        <div>
+            <button onclick="addParagraf()">+ Akapit</button>
+            <button onclick="addHeading('up')">Nagłówek (w górę)</button>
+            <button onclick="addHeading('')">Nagłówek</button>
+            <button onclick="addHeading('down')">Nagłówek (w dół)</button>
+        </div>
+</body>
+</html>
