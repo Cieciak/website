@@ -51,3 +51,14 @@ function addHeading(direction){
 function deleteSelf(element){
     element.parentElement.remove();
 }
+
+function allowDrop(ev){
+    ev.preventDefault();
+}
+
+function dropHandle(ev){
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    console.log('hello');
+}
