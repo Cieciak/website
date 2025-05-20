@@ -1,5 +1,6 @@
 <html>
 <head>
+    <link rel="icon" href="/static/images/favicon.svg" sizes="any" type="image/svg+xml">
     <link rel="stylesheet" href="/static/css/vars.css">
     <style>
         * {
@@ -51,36 +52,67 @@
         div {
             background-color: #fff1;
         }
+
+        #img-title {
+            max-width: 100%;
+            max-height: 50vh;
+
+            display: block;
+            margin: auto;
+        }
+
+        #drop-img-title {
+            min-height: 40vh;
+
+            text-align: center;
+        }
+
+        #img-list {
+            min-height: 20vh;
+
+            display: block;
+        }
+
+        #img-list > div > img {
+            max-height: 5vh;
+        }
+
     </style>
 
     <script src="/static/js/news.js"></script>
 </head>
 <body>
-    <div style="height: fit-content;">
+    <div id="container-title">
         <p>Tytuł:</p>
-        <h1 contenteditable>fdd</h1>
+        <h1 contenteditable>Tytuł artykułu</h1>
+        <div id="drop-img-title" ondragover="eventDragover(event)" ondrop="eventDrop(event)">
+            <img id="img-title"/>
+            <p id="p-img-title">+ Dodaj zdjęcie</p>
+        </div>
     </div>
-    <div ondrop="dropHandle(event);" ondragover="allowDrop(event)" style="height: 10%; border: solid rebeccapurple 1px;">
-    </div>
-    <div style="height: fit-content;">
+    <div id="container-lead">
         <p>Lead:</p>
-        <h2 contenteditable>fdd</h2>
+        <h2 contenteditable>Lead artykułu</h2>
     </div>
-    <div style="height: fit-content;">
+    <div id="container-content">
         <p>Treść:</p>
         <div>
             <button onclick="document.execCommand('bold', false, null);">Pogrubienie</button>
             <button onclick="document.execCommand('italic', false, null);">Pochylenie</button>
             <button onclick="document.execCommand('underline', false, null);">Podkreślenie</button>
         </div>
-        <div id="article">
-        </div>
-        </div>
+        <div id="article"></div>
         <div>
             <button onclick="addParagraf()">+ Akapit</button>
-            <button onclick="addHeading('up')">Nagłówek (w górę)</button>
-            <button onclick="addHeading('')">Nagłówek</button>
-            <button onclick="addHeading('down')">Nagłówek (w dół)</button>
+            <button onclick="addHeading('up')">+ Nagłówek (w górę)</button>
+            <button onclick="addHeading('')">+ Nagłówek</button>
+            <button onclick="addHeading('down')">+ Nagłówek (w dół)</button>
         </div>
+    </div>
+    <div id="container-gallery">
+        <p>Galeria:</p>
+        <div id="img-list" ondragover="eventDragover(event)" ondrop="appendGallery(event)"></div>
+
+    </div>
 </body>
 </html>
