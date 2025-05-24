@@ -1,56 +1,58 @@
 <html>
 <head>
-    <link rel="icon" href="/static/images/favicon.svg" sizes="any" type="image/svg+xml">
-    <link rel="stylesheet" href="/static/css/vars.css">
     <style>
+        :root {
+            --def-bg: #040f3c;
+            --def-light-bg: #0A2799;
+            --def-fg: #01b472;
+            --def-fn: "IBM Plex Mono", monospace;
+        }
+
         * {
             box-sizing: border-box;
             color:  var(--def-fg);
             font-family: var(--def-fn);
-            background-color: var(--def-bg);
 
             margin: 0px;
             padding: 0px;
         }
-        html, body {
-            height: 100%;
-        }
 
-        p, b, i, u {
-            background-color: #fff0;
-        }
+        body {
+            background-color: var(--def-bg);
 
-        #article {
-            padding: 0.2em;
-        }
-        #article > div {
-            border-radius: 0.5em;
-            border: 2px solid darkblue;
-            padding: 0.5em;
-            margin-bottom: 0.5em;
-        }
-        #article > div > :is(p, h1, h2, h3, h4, h5, h6)[contenteditable] {
-            border-radius: 0.5em;
-            border: 2px solid darkblue;
-            padding: 0.5em;
-            margin-bottom: 0.2em;
-            background-color: #fff0;
-        }
-
-        p {
-            padding: 0.333em;
-
-            background-color: #fff0;
+            padding: 0.8em;
         }
 
         button {
-            border: 2px solid darkcyan;
-            border-radius: 0.8em;
+            background-color: var(--def-bg);
+            border: 2px solid turquoise;
+
             padding: 0.4em;
         }
 
-        div {
-            background-color: #fff1;
+        .container-div {
+            border: 2px solid aquamarine;
+
+            padding: 0.4em;
+            margin-bottom: 0.8em;
+        }
+
+        .container-div > div {
+            margin-bottom: 0.8em;
+        }
+
+        .container-div :is(p, h1, h2, h3, h4, h5, h6)[contenteditable] {
+            border: 2px solid turquoise;
+
+            padding: 0.15em;
+            background-color: navy;
+        }
+
+        #drop-img-title {
+            padding: 0.15em;
+
+            min-height: 40vh;
+            text-align: center;
         }
 
         #img-title {
@@ -61,14 +63,9 @@
             margin: auto;
         }
 
-        #drop-img-title {
-            min-height: 40vh;
-
-            text-align: center;
-        }
-
         #img-list {
-            min-height: 20vh;
+            min-height: 5vh;
+            padding: 0.8em;
 
             display: block;
         }
@@ -77,25 +74,171 @@
             max-height: 5vh;
         }
 
+        .gallery-img-container {
+            border: 2px aquamarine solid;
+
+            padding: 0.4em;
+            margin-bottom: 0.4em;
+        }
+
+        .gallery-img-container > * {
+            padding: 0.1em;
+
+            background-color: #0000;
+        }
+
     </style>
 
-    <script src="/static/js/news.js"></script>
+    <script>
+        var hlevel = 3;
+
+        function addParagraf(){
+            let article = document.getElementById("article");
+
+            let paragraf = document.createElement("div");
+
+            let title = document.createElement("p");
+            title.innerText = "Akapit";
+
+            let p = document.createElement("p");
+            p.setAttribute("contenteditable", true);
+
+
+            let b = document.createElement("button");
+            b.setAttribute("onclick", "deleteSelf(this);");
+            b.innerText = "Delete";
+
+            paragraf.appendChild(title);
+            paragraf.appendChild(p);
+            paragraf.appendChild(b);
+
+            article.appendChild(paragraf);
+        }
+
+        function addHeading(direction){
+            if (direction ==   'up') {hlevel -= 1;}
+            if (direction == 'down') {hlevel += 1;}
+
+            let article = document.getElementById("article");
+
+            let paragraf = document.createElement("div");
+
+            let title = document.createElement("p");
+            title.innerText = 'Nagłówek ' + hlevel;
+
+            let p = document.createElement("h" + hlevel);
+            p.setAttribute("contenteditable", true);
+
+            let b = document.createElement("button");
+            b.setAttribute("onclick", "deleteSelf(this);");
+            b.innerText = "Delete";
+
+            paragraf.appendChild(title);
+            paragraf.appendChild(p);
+            paragraf.appendChild(b);
+
+            article.appendChild(paragraf);
+        }
+
+        function deleteSelf(element){
+            console.log(element);
+            element.parentElement.remove();
+        }
+
+        function deleteParent(element, level){
+            while (level > 0){
+                element = element.parentElement;
+                level -= 1;
+            }
+
+            element.remove();
+        }
+
+        function eventDragover(event){
+            event.stopPropagation();
+            event.preventDefault();
+
+            event.dataTransfer.dropEffect = 'copy';
+        }
+
+        async function appendGallery(event){
+            event.stopPropagation();
+            event.preventDefault();
+
+            let gallery = document.getElementById("img-list");
+
+            for (const file of event.dataTransfer.files){
+                let element = document.createElement("div");
+                element.classList.add('gallery-img-container');
+
+                let name    = document.createElement("p");
+                name.innerText = file.name;
+                element.appendChild(name);
+
+                let image   = document.createElement("img");
+                image.src = "data:image/png;base64," + await getBase64(file);
+                element.appendChild(image);
+
+                let container = document.createElement("div");
+
+                let button  = document.createElement("button");
+                button.innerText = "Delete";
+                button.setAttribute("onclick", "deleteParent(this, 2)");
+                container.appendChild(button);
+
+                element.appendChild(container);
+
+                gallery.appendChild(element);
+            }
+        }
+
+        async function eventDrop(event){
+            event.stopPropagation();
+            event.preventDefault();
+
+            let files = event.dataTransfer.files;
+            console.log(files);
+            let file  = files[0];
+
+            let data = await getBase64(file);
+
+            let image = document.getElementById("img-title");
+            image.src = 'data:image/png;base64,' + data;
+
+            var image_title = document.getElementById("p-img-title");
+            image_title.innerText = file.name;
+        }
+
+        async function getBase64(file){
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => {
+                    let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
+                    if ((encoded.length % 4) > 0) {
+                        encoded += '='.repeat(4 - (encoded.length % 4));
+                    }
+                    resolve(encoded);
+                };
+                reader.onerror = error => reject(error);
+            });
+        }
+
+    </script>
 </head>
 <body>
-    <div id="container-title">
-        <p>Tytuł:</p>
+    <div class="container-div" id="container-title">
         <h1 contenteditable>Tytuł artykułu</h1>
         <div id="drop-img-title" ondragover="eventDragover(event)" ondrop="eventDrop(event)">
-            <img id="img-title"/>
+            <img id="img-title">
             <p id="p-img-title">+ Dodaj zdjęcie</p>
         </div>
     </div>
-    <div id="container-lead">
-        <p>Lead:</p>
+    <div class="container-div" id="container-lead">
         <h2 contenteditable>Lead artykułu</h2>
     </div>
-    <div id="container-content">
-        <p>Treść:</p>
+    <div class="container-div" id="container-content">
+        <h3>Treść:</h3>
         <div>
             <button onclick="document.execCommand('bold', false, null);">Pogrubienie</button>
             <button onclick="document.execCommand('italic', false, null);">Pochylenie</button>
@@ -109,10 +252,10 @@
             <button onclick="addHeading('down')">+ Nagłówek (w dół)</button>
         </div>
     </div>
-    <div id="container-gallery">
-        <p>Galeria:</p>
-        <div id="img-list" ondragover="eventDragover(event)" ondrop="appendGallery(event)"></div>
-
+    <div class="container-div" id="container-gallery">
+        <h3>Galeria:</h3>
+        <div id="img-list" ondragover="eventDragover(event)" ondrop="appendGallery(event)">
+        </div>
     </div>
 </body>
 </html>

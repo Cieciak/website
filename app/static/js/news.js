@@ -49,7 +49,17 @@ function addHeading(direction){
 }
 
 function deleteSelf(element){
+    console.log(element);
     element.parentElement.remove();
+}
+
+function deleteParent(element, level){
+    while (level > 0){
+        element = element.parentElement;
+        level -= 1;
+    }
+
+    element.remove();
 }
 
 function eventDragover(event){
@@ -67,6 +77,7 @@ async function appendGallery(event){
 
     for (const file of event.dataTransfer.files){
         let element = document.createElement("div");
+        element.classList.add('gallery-img-container');
 
         let name    = document.createElement("p");
         name.innerText = file.name;
@@ -75,6 +86,15 @@ async function appendGallery(event){
         let image   = document.createElement("img");
         image.src = "data:image/png;base64," + await getBase64(file);
         element.appendChild(image);
+
+        let container = document.createElement("div");
+
+        let button  = document.createElement("button");
+        button.innerText = "Delete";
+        button.setAttribute("onclick", "deleteParent(this, 2)");
+        container.appendChild(button);
+
+        element.appendChild(container);
 
         gallery.appendChild(element);
     }
