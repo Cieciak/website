@@ -87,6 +87,14 @@
             background-color: #0000;
         }
 
+        #container-message {
+            border: 2px solid #99270a;
+        }
+
+        #container-message > p {
+            font-weight: bold;
+        }
+
     </style>
 
     <script>
@@ -175,9 +183,9 @@
                 name.innerText = file.name;
                 element.appendChild(name);
 
-                let image   = document.createElement("img");
-                image.src = "data:image/png;base64," + await getBase64(file);
-                element.appendChild(image);
+                //let image   = document.createElement("img");
+                //image.src = "data:image/png;base64," + await getBase64(file);
+                //element.appendChild(image);
 
                 let container = document.createElement("div");
 
@@ -202,8 +210,8 @@
 
             let data = await getBase64(file);
 
-            let image = document.getElementById("img-title");
-            image.src = 'data:image/png;base64,' + data;
+            //let image = document.getElementById("img-title");
+            //image.src = 'data:image/png;base64,' + data;
 
             var image_title = document.getElementById("p-img-title");
             image_title.innerText = file.name;
@@ -224,9 +232,33 @@
             });
         }
 
+        function savePage() {
+            // Get the entire HTML of the page
+            const htmlContent = document.documentElement.outerHTML;
+
+            // Create a Blob from the HTML
+            const blob = new Blob([htmlContent], { type: "text/html" });
+
+            // Create a temporary download link
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "page.html";
+
+            // Append to body, trigger click, and remove the link
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
     </script>
 </head>
 <body>
+    <div class="container-div" id="container-message">
+        <p>Wersja testowa z dnia 12.06.2025</p>
+    </div>
+    <div class="container-div" id="container-toolbar">
+        <button onclick="savePage()">Save</button>
+    </div>
     <div class="container-div" id="container-title">
         <h1 contenteditable>Tytuł artykułu</h1>
         <div id="drop-img-title" ondragover="eventDragover(event)" ondrop="eventDrop(event)">
