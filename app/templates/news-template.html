@@ -2,9 +2,9 @@
 <head>
     <style>
         :root {
-            --def-bg: #040f3c;
-            --def-light-bg: #0A2799;
-            --def-fg: #01b472;
+            --def-light-bg: #ddd;
+            --def-bg: #eee;
+            --def-fg: #222;
             --def-fn: "IBM Plex Mono", monospace;
         }
 
@@ -24,14 +24,41 @@
         }
 
         button {
-            background-color: var(--def-bg);
-            border: 2px solid turquoise;
+            padding: 0.25em;
+        }
 
-            padding: 0.4em;
+        .grey-btn {
+            background-color: #eee;
+
+            border: 2px solid #aaa;
+            border-radius: 0.5em;
+        }
+
+        .green-btn {
+            background-color: #dfd;
+
+            border: 2px solid #aca;
+            border-radius: 0.5em;
+        }
+
+        .blue-btn {
+            background-color: #ddf;
+
+            border: 2px solid #aac;
+            border-radius: 0.5em;
+        }
+
+        .red-btn {
+            background-color: #fdd;
+
+            border: 2px solid #caa;
+            border-radius: 0.5em;
         }
 
         .container-div {
-            border: 2px solid aquamarine;
+            border: 2px solid #aaa;
+            border-radius: 0.5em;
+            background-color: #ddd;
 
             padding: 0.4em;
             margin-bottom: 0.8em;
@@ -42,85 +69,53 @@
         }
 
         .container-div :is(p, h1, h2, h3, h4, h5, h6)[contenteditable] {
-            border: 2px solid turquoise;
+            background-color: #ddd;
+            
+            border: 2px solid #aaa;
+            border-radius: 0.5em;
 
-            padding: 0.15em;
-            background-color: navy;
-        }
+            margin-top: 0.1em;
 
-        #drop-img-title {
-            padding: 0.15em;
-
-            min-height: 40vh;
-            text-align: center;
-        }
-
-        #img-title {
-            max-width: 100%;
-            max-height: 50vh;
-
-            display: block;
-            margin: auto;
-        }
-
-        #img-list {
-            min-height: 5vh;
-            padding: 0.8em;
-
-            display: block;
-        }
-
-        #img-list > div > img {
-            max-height: 5vh;
-        }
-
-        .gallery-img-container {
-            border: 2px aquamarine solid;
-
-            padding: 0.4em;
-            margin-bottom: 0.4em;
-        }
-
-        .gallery-img-container > * {
-            padding: 0.1em;
-
-            background-color: #0000;
+            padding: 0.25em;
         }
 
         #container-message {
-            border: 2px solid #99270a;
+            border: 2px solid #900;
+            border-radius: 0.5em;
+            background-color: #a44;
         }
 
         #container-message > p {
             font-weight: bold;
         }
-
     </style>
 
     <script>
         var hlevel = 3;
 
-        function addParagraf(){
+        function addParagraf() {
             let article = document.getElementById("article");
+            article.setAttribute("style", "border: 2px solid #aaa; padding: 0.2em; border-radius: 0.5em")
 
-            let paragraf = document.createElement("div");
-
-            let title = document.createElement("p");
+            let container = document.createElement("div");
+            
+            let title     = document.createElement("p");
             title.innerText = "Akapit";
 
-            let p = document.createElement("p");
-            p.setAttribute("contenteditable", true);
+            let content   = document.createElement("p");
+            content.setAttribute("contenteditable", true);
 
+            let button    = document.createElement("button");
+            button.setAttribute("onclick", "deleteSelf(this);");
+            button.setAttribute("style", "margin-top: 0.5em;");
+            button.classList.add("red-btn");
+            button.innerText = "Delete";
 
-            let b = document.createElement("button");
-            b.setAttribute("onclick", "deleteSelf(this);");
-            b.innerText = "Delete";
+            container.appendChild(title);
+            container.appendChild(content);
+            container.appendChild(button);
 
-            paragraf.appendChild(title);
-            paragraf.appendChild(p);
-            paragraf.appendChild(b);
-
-            article.appendChild(paragraf);
+            article.appendChild(container);
         }
 
         function addHeading(direction){
@@ -137,13 +132,15 @@
             let p = document.createElement("h" + hlevel);
             p.setAttribute("contenteditable", true);
 
-            let b = document.createElement("button");
-            b.setAttribute("onclick", "deleteSelf(this);");
-            b.innerText = "Delete";
+            let button    = document.createElement("button");
+            button.setAttribute("onclick", "deleteSelf(this);");
+            button.setAttribute("style", "margin-top: 0.5em;");
+            button.classList.add("red-btn");
+            button.innerText = "Delete";
 
             paragraf.appendChild(title);
             paragraf.appendChild(p);
-            paragraf.appendChild(b);
+            paragraf.appendChild(button);
 
             article.appendChild(paragraf);
         }
@@ -217,21 +214,6 @@
             image_title.innerText = file.name;
         }
 
-        async function getBase64(file){
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => {
-                    let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
-                    if ((encoded.length % 4) > 0) {
-                        encoded += '='.repeat(4 - (encoded.length % 4));
-                    }
-                    resolve(encoded);
-                };
-                reader.onerror = error => reject(error);
-            });
-        }
-
         function savePage() {
             // Get the entire HTML of the page
             const htmlContent = document.documentElement.outerHTML;
@@ -242,7 +224,9 @@
             // Create a temporary download link
             const link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
-            link.download = "page.html";
+
+
+            link.download = document.getElementById("article-title").innerText;
 
             // Append to body, trigger click, and remove the link
             document.body.appendChild(link);
@@ -256,38 +240,31 @@
     <div class="container-div" id="container-message">
         <p>Wersja testowa z dnia 12.06.2025</p>
     </div>
-    <div class="container-div" id="container-toolbar">
-        <button onclick="savePage()">Save</button>
-    </div>
     <div class="container-div" id="container-title">
-        <h1 contenteditable>Tytuł artykułu</h1>
-        <div id="drop-img-title" ondragover="eventDragover(event)" ondrop="eventDrop(event)">
-            <img id="img-title">
-            <p id="p-img-title">+ Dodaj zdjęcie</p>
-        </div>
+        <p>Tytuł:</p>
+        <h1 contenteditable id="article-title">Tytuł artykułu</h1>
     </div>
     <div class="container-div" id="container-lead">
+        <p>Lead:</p>
         <h2 contenteditable>Lead artykułu</h2>
     </div>
     <div class="container-div" id="container-content">
-        <h3>Treść:</h3>
+        <p>Treść:</p>
         <div>
-            <button onclick="document.execCommand('bold', false, null);">Pogrubienie</button>
-            <button onclick="document.execCommand('italic', false, null);">Pochylenie</button>
-            <button onclick="document.execCommand('underline', false, null);">Podkreślenie</button>
+            <button class="grey-btn" onclick="document.execCommand('bold', false, null);">Pogrubienie</button>
+            <button class="grey-btn" onclick="document.execCommand('italic', false, null);">Pochylenie</button>
+            <button class="grey-btn" onclick="document.execCommand('underline', false, null);">Podkreślenie</button>
         </div>
         <div id="article"></div>
         <div>
-            <button onclick="addParagraf()">+ Akapit</button>
-            <button onclick="addHeading('up')">+ Nagłówek (w górę)</button>
-            <button onclick="addHeading('')">+ Nagłówek</button>
-            <button onclick="addHeading('down')">+ Nagłówek (w dół)</button>
+            <button class="blue-btn" onclick="addParagraf()">+ Akapit</button>
+            <button class="blue-btn" onclick="addHeading('up')">+ Nagłówek (w górę)</button>
+            <button class="blue-btn" onclick="addHeading('')">+ Nagłówek</button>
+            <button class="blue-btn" onclick="addHeading('down')">+ Nagłówek (w dół)</button>
         </div>
     </div>
-    <div class="container-div" id="container-gallery">
-        <h3>Galeria:</h3>
-        <div id="img-list" ondragover="eventDragover(event)" ondrop="appendGallery(event)">
-        </div>
+    <div class="container-div" id="container-toolbar">
+        <button class="green-btn" onclick="savePage()">Save</button>
     </div>
 </body>
 </html>
