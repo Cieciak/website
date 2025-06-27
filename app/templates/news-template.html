@@ -1,5 +1,6 @@
 <html>
 <head>
+    <title>Wzór artykułu</title>
     <style>
         :root {
             --def-light-bg: #ddd;
@@ -91,10 +92,11 @@
     </style>
 
     <script>
+        // Startowy poziom nagłówka
         var hlevel = 3;
 
         function addParagraf() {
-            let article = document.getElementById("article");
+            let article   = document.getElementById("article");
             article.setAttribute("style", "border: 2px solid #aaa; padding: 0.2em; border-radius: 0.5em")
 
             let container = document.createElement("div");
@@ -106,7 +108,7 @@
             content.setAttribute("contenteditable", true);
 
             let button    = document.createElement("button");
-            button.setAttribute("onclick", "deleteSelf(this);");
+            button.setAttribute("onclick", "deleteParent(this, 1);");
             button.setAttribute("style", "margin-top: 0.5em;");
             button.classList.add("red-btn");
             button.innerText = "Delete";
@@ -119,35 +121,29 @@
         }
 
         function addHeading(direction){
-            if (direction ==   'up') {hlevel -= 1;}
-            if (direction == 'down') {hlevel += 1;}
+            hlevel += direction;
 
-            let article = document.getElementById("article");
+            let article   = document.getElementById("article");
 
-            let paragraf = document.createElement("div");
+            let container = document.createElement("div");
 
-            let title = document.createElement("p");
+            let title     = document.createElement("p");
             title.innerText = 'Nagłówek ' + hlevel;
 
-            let p = document.createElement("h" + hlevel);
-            p.setAttribute("contenteditable", true);
+            let heading   = document.createElement("h" + hlevel);
+            heading.setAttribute("contenteditable", true);
 
             let button    = document.createElement("button");
-            button.setAttribute("onclick", "deleteSelf(this);");
+            button.setAttribute("onclick", "deleteParent(this, 1);");
             button.setAttribute("style", "margin-top: 0.5em;");
             button.classList.add("red-btn");
-            button.innerText = "Delete";
+            button.innerText = "Usuń";
 
-            paragraf.appendChild(title);
-            paragraf.appendChild(p);
-            paragraf.appendChild(button);
+            container.appendChild(title);
+            container.appendChild(heading);
+            container.appendChild(button);
 
-            article.appendChild(paragraf);
-        }
-
-        function deleteSelf(element){
-            console.log(element);
-            element.parentElement.remove();
+            article.appendChild(container);
         }
 
         function deleteParent(element, level){
@@ -159,76 +155,15 @@
             element.remove();
         }
 
-        function eventDragover(event){
-            event.stopPropagation();
-            event.preventDefault();
-
-            event.dataTransfer.dropEffect = 'copy';
-        }
-
-        async function appendGallery(event){
-            event.stopPropagation();
-            event.preventDefault();
-
-            let gallery = document.getElementById("img-list");
-
-            for (const file of event.dataTransfer.files){
-                let element = document.createElement("div");
-                element.classList.add('gallery-img-container');
-
-                let name    = document.createElement("p");
-                name.innerText = file.name;
-                element.appendChild(name);
-
-                //let image   = document.createElement("img");
-                //image.src = "data:image/png;base64," + await getBase64(file);
-                //element.appendChild(image);
-
-                let container = document.createElement("div");
-
-                let button  = document.createElement("button");
-                button.innerText = "Delete";
-                button.setAttribute("onclick", "deleteParent(this, 2)");
-                container.appendChild(button);
-
-                element.appendChild(container);
-
-                gallery.appendChild(element);
-            }
-        }
-
-        async function eventDrop(event){
-            event.stopPropagation();
-            event.preventDefault();
-
-            let files = event.dataTransfer.files;
-            console.log(files);
-            let file  = files[0];
-
-            let data = await getBase64(file);
-
-            //let image = document.getElementById("img-title");
-            //image.src = 'data:image/png;base64,' + data;
-
-            var image_title = document.getElementById("p-img-title");
-            image_title.innerText = file.name;
-        }
-
         function savePage() {
-            // Get the entire HTML of the page
-            const htmlContent = document.documentElement.outerHTML;
+            let htmlContent = document.documentElement.outerHTML;
 
-            // Create a Blob from the HTML
-            const blob = new Blob([htmlContent], { type: "text/html" });
+            let blob = new Blob([htmlContent], { type: "text/html" });
 
-            // Create a temporary download link
-            const link = document.createElement("a");
+            let link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
-
-
             link.download = document.getElementById("article-title").innerText;
 
-            // Append to body, trigger click, and remove the link
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -238,7 +173,7 @@
 </head>
 <body>
     <div class="container-div" id="container-message">
-        <p>Wersja testowa z dnia 12.06.2025</p>
+        <p>Wersja testowa z dnia 27.06.2025</p>
     </div>
     <div class="container-div" id="container-title">
         <p>Tytuł:</p>
@@ -258,13 +193,13 @@
         <div id="article"></div>
         <div>
             <button class="blue-btn" onclick="addParagraf()">+ Akapit</button>
-            <button class="blue-btn" onclick="addHeading('up')">+ Nagłówek (w górę)</button>
-            <button class="blue-btn" onclick="addHeading('')">+ Nagłówek</button>
-            <button class="blue-btn" onclick="addHeading('down')">+ Nagłówek (w dół)</button>
+            <button class="blue-btn" onclick="addHeading(+1)">+ Nagłówek (w górę)</button>
+            <button class="blue-btn" onclick="addHeading( 0)">+ Nagłówek</button>
+            <button class="blue-btn" onclick="addHeading(-1)">+ Nagłówek (w dół)</button>
         </div>
     </div>
     <div class="container-div" id="container-toolbar">
-        <button class="green-btn" onclick="savePage()">Save</button>
+        <button class="green-btn" onclick="savePage()">Zapisz</button>
     </div>
 </body>
 </html>
